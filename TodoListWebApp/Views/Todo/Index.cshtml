@@ -1,34 +1,42 @@
 ﻿@model IEnumerable<TodoListWebApp.Models.Todo>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "To Do List";
 }
 
-<h2>Index</h2>
+<h3>Add an Item</h3>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+@if (ViewBag.ErrorMessage == null)
+{
+    <form name="input" action="TodoList" method="post">
+        New Item: <input type="text" name="item">
+        <input type="submit" value="Submit">
+    </form>
+}
+
+<table class="table table-bordered table-striped">
+
     <tr>
-       
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th></th>
+        <th>Item Name</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>       
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var i in Model)
+    {
+        <tr>
+            <td>@i.Description</td>
+        </tr>
+    }
 
 </table>
+
+@*@if (ViewBag.ErrorMessage == "AuthorizationRequired")
+{
+    <p>You have to sign-in to see your to do list. Click @Html.ActionLink("here", "Index", "TodoList", new { reauth = true }, null) to sign-in.</p>
+
+}
+
+@if (ViewBag.ErrorMessage == "UnexpectedError")
+{
+    <p>An unexpected error occurred while retrieving your to do list.  Please try again.  You may need to sign-in.</p>
+}*@
+
